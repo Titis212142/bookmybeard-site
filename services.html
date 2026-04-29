@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookMyBeard - Nos services</title>
+    <meta
+      name="description"
+      content="Découvrez tous les services BookMyBeard à Yverdon et réservez votre créneau en ligne."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="services-page">
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="index.html#top"
+          aria-label="BookMyBeard - Retour à l'accueil"
+        >
+          <img src="logo.png" alt="Logo BookMyBeard" class="brand-png" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Ouvrir le menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="primary-navigation" aria-label="Navigation principale">
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="a-propos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <a href="#reservation" class="btn btn-primary header-cta">Réserver</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="reservation" aria-labelledby="services-hero-title">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Prestations premium</span>
+            <h1 id="services-hero-title">Nos services barbershop à Yverdon</h1>
+            <p>
+              Des prestations pensées pour un résultat propre, moderne et durable.
+              Réservez le créneau qui vous arrange en quelques clics.
+            </p>
+          </div>
+
+          <aside class="booking-card" aria-labelledby="booking-title">
+            <h2 id="booking-title">Réserver un service</h2>
+            <form id="bookingForm" class="booking-form" novalidate>
+              <div class="field">
+                <label for="bookingName">Nom complet</label>
+                <input
+                  id="bookingName"
+                  name="fullName"
+                  type="text"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="field">
+                <label for="bookingEmail">Email</label>
+                <input
+                  id="bookingEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="field">
+                <label for="service">Service</label>
+                <select
+                  id="service"
+                  name="service"
+                  required
+                  aria-required="true"
+                >
+                  <option value="">Sélectionnez un service</option>
+                  <option value="Taille de barbe">
+                    Taille de barbe - CHF 25
+                  </option>
+                  <option value="Coupe + barbe">Coupe + barbe - CHF 45</option>
+                  <option value="Rasage à l’ancienne">
+                    Rasage à l’ancienne - CHF 35
+                  </option>
+                  <option value="Soin barbe premium">
+                    Soin barbe premium - CHF 30
+                  </option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="date">Date</label>
+                <input
+                  id="date"
+                  name="date"
+                  type="date"
+                  required
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="field">
+                <label for="time">Heure</label>
+                <select id="time" name="time" required aria-required="true">
+                  <option value="">Choisissez une heure</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                  <option value="17:00">17:00</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Réserver maintenant
+              </button>
+              <p class="booking-note">Sans paiement en ligne</p>
+              <p class="error-message" id="formError" aria-live="polite"></p>
+            </form>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="services-list" aria-labelledby="services-title">
+        <div class="container">
+          <span class="eyebrow">Nos prestations</span>
+          <h2 id="services-title">Choisissez votre service</h2>
+          <div class="services-grid">
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Taille de barbe</h3>
+                <span class="price">CHF 25</span>
+              </div>
+              <p class="service-meta">
+                Durée estimée : 25 min · Entretien : toutes les 2-3 semaines
+              </p>
+              <p>
+                Ligne de barbe nette, contours précis et finition clean pour un
+                look maîtrisé au quotidien.
+              </p>
+              <ul class="service-details">
+                <li>Analyse rapide de la forme du visage</li>
+                <li>Tracé des contours joues + cou</li>
+                <li>Finition tondeuse et ciseaux</li>
+              </ul>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Taille de barbe"
+              >
+                Réserver
+              </button>
+            </article>
+
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Coupe + barbe</h3>
+                <span class="price">CHF 45</span>
+              </div>
+              <p class="service-meta">
+                Durée estimée : 45 min · Entretien : toutes les 3-4 semaines
+              </p>
+              <p>
+                Prestation complète cheveux + barbe avec conseil style selon votre
+                visage et votre routine.
+              </p>
+              <ul class="service-details">
+                <li>Coupe personnalisée au ciseau/tondeuse</li>
+                <li>Dégradé propre et harmonisation barbe-cheveux</li>
+                <li>Finition styling pour un rendu net</li>
+              </ul>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Coupe + barbe"
+              >
+                Réserver
+              </button>
+            </article>
+
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Rasage à l’ancienne</h3>
+                <span class="price">CHF 35</span>
+              </div>
+              <p class="service-meta">
+                Durée estimée : 35 min · Entretien : selon repousse
+              </p>
+              <p>
+                Serviette chaude, préparation peau, rasage traditionnel et finition
+                confortable sans irritation.
+              </p>
+              <ul class="service-details">
+                <li>Préparation peau avec serviette chaude</li>
+                <li>Rasage précis en plusieurs passes</li>
+                <li>Baume apaisant post-rasage</li>
+              </ul>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Rasage à l’ancienne"
+              >
+                Réserver
+              </button>
+            </article>
+
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Soin barbe premium</h3>
+                <span class="price">CHF 30</span>
+              </div>
+              <p class="service-meta">
+                Durée estimée : 30 min · Idéal pour barbe sèche ou dense
+              </p>
+              <p>
+                Soin nourrissant, coupe légère, hydratation et conseils produits
+                pour garder une barbe saine.
+              </p>
+              <ul class="service-details">
+                <li>Nettoyage doux + serviette chaude</li>
+                <li>Hydratation huile ou baume adaptée</li>
+                <li>Conseils d’entretien à domicile</li>
+              </ul>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Soin barbe premium"
+              >
+                Réserver
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="final-cta">
+            <h2>Besoin d’un conseil avant de réserver ?</h2>
+            <p>
+              Notre équipe vous guide sur le service adapté à votre style. Appelez
+              ou réservez directement en ligne.
+            </p>
+            <a href="#reservation" class="btn btn-primary">Réserver maintenant</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html#top" aria-label="BookMyBeard - Accueil">
+            <img
+              src="bookmybeardlogofooter.png"
+              alt="Logo BookMyBeard"
+              class="brand-png footer-logo"
+            />
+          </a>
+          <p>
+            Barbershop moderne à Yverdon, réservation simple et rapide pour vos
+            rendez-vous.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Liens</h3>
+          <div class="footer-links">
+            <a href="index.html">Accueil</a>
+            <a href="services.html">Services</a>
+            <a href="a-propos.html">À propos</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Coordonnées</h3>
+          <p>
+            BookMyBeard Yverdon<br />Avenue des Sports 12, 1400
+            Yverdon-les-Bains
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Horaires</h3>
+          <p>
+            Lun - Ven : 09:00 - 19:00<br />Samedi : 09:00 - 17:00<br />Dimanche :
+            Fermé
+          </p>
+        </div>
+      </div>
+      <div class="container legal-note">
+        Données personnelles traitées conformément au RGPD.
+        <a class="legal-link" href="politique-confidentialite.html">Politique de confidentialité</a>
+        <a class="legal-link" href="admin.html">Administration</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

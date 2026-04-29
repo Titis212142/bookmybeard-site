@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookMyBeard - Contact</title>
+    <meta
+      name="description"
+      content="Contactez BookMyBeard à Yverdon, retrouvez les horaires et réservez votre prochain rendez-vous."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="contact-page">
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="index.html#top"
+          aria-label="BookMyBeard - Retour à l'accueil"
+        >
+          <img src="logo.png" alt="Logo BookMyBeard" class="brand-png" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Ouvrir le menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="primary-navigation" aria-label="Navigation principale">
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="a-propos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <a href="index.html#reservation" class="btn btn-primary header-cta">Réserver</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="contact-hero-title">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Contact</span>
+            <h1 id="contact-hero-title">Parlons de votre prochain rendez-vous</h1>
+            <p>
+              Besoin d’une info rapide sur un service ou un horaire ? Contactez
+              BookMyBeard à Yverdon, on vous répond rapidement.
+            </p>
+          </div>
+
+          <aside class="booking-card" aria-labelledby="contact-card-title">
+            <h2 id="contact-card-title">Infos rapides</h2>
+            <p class="contact-quick-item"><strong>Téléphone :</strong> 024 555 14 00</p>
+            <p class="contact-quick-item"><strong>Email :</strong> contact@bookmybeard.ch</p>
+            <p class="contact-quick-item">
+              <strong>Adresse :</strong> Avenue des Sports 12, 1400 Yverdon-les-Bains
+            </p>
+            <p class="contact-quick-item">
+              <strong>Horaires :</strong> Lun - Ven 09:00 - 19:00 · Sam 09:00 - 17:00
+            </p>
+            <a href="index.html#reservation" class="btn btn-primary contact-cta-btn"
+              >Réserver maintenant</a
+            >
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="contact-form-title">
+        <div class="container contact-grid">
+          <article class="card contact-panel">
+            <h2 id="contact-form-title">Envoyer un message</h2>
+            <p>
+              Une question sur une prestation, un créneau ou votre réservation ?
+              Écrivez-nous via ce formulaire.
+            </p>
+
+            <form id="contactForm" class="contact-form" action="#" method="post" novalidate>
+              <div class="field">
+                <label for="fullname">Nom et prénom</label>
+                <input id="fullname" name="fullName" type="text" required />
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+
+              <div class="field">
+                <label for="subject">Sujet</label>
+                <select id="subject" name="subject" required>
+                  <option value="">Choisissez un sujet</option>
+                  <option value="Question service">Question service</option>
+                  <option value="Demande de créneau">Demande de créneau</option>
+                  <option value="Modification rendez-vous">
+                    Modification rendez-vous
+                  </option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="Expliquez votre demande..."
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-secondary">Envoyer</button>
+              <p id="contactFormFeedback" class="contact-form-feedback" aria-live="polite"></p>
+            </form>
+          </article>
+
+          <article class="card contact-panel" aria-labelledby="access-title">
+            <h2 id="access-title">Accès & informations</h2>
+            <p>
+              Salon situé au centre d’Yverdon-les-Bains, facile d’accès en voiture
+              et en transports publics.
+            </p>
+            <ul class="service-details">
+              <li>Parking public à 2 minutes à pied</li>
+              <li>Proche de la gare d’Yverdon</li>
+              <li>Accueil sur rendez-vous</li>
+            </ul>
+            <iframe
+              class="contact-map"
+              title="Carte Google Maps - BookMyBeard Yverdon"
+              src="https://www.google.com/maps?q=Avenue%20des%20Sports%2012%2C%201400%20Yverdon-les-Bains&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html#top" aria-label="BookMyBeard - Accueil">
+            <img
+              src="bookmybeardlogofooter.png"
+              alt="Logo BookMyBeard"
+              class="brand-png footer-logo"
+            />
+          </a>
+          <p>
+            Barbershop moderne à Yverdon, réservation simple et rapide pour vos
+            rendez-vous.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Liens</h3>
+          <div class="footer-links">
+            <a href="index.html">Accueil</a>
+            <a href="services.html">Services</a>
+            <a href="a-propos.html">À propos</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Coordonnées</h3>
+          <p>
+            BookMyBeard Yverdon<br />Avenue des Sports 12, 1400
+            Yverdon-les-Bains
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Horaires</h3>
+          <p>
+            Lun - Ven : 09:00 - 19:00<br />Samedi : 09:00 - 17:00<br />Dimanche :
+            Fermé
+          </p>
+        </div>
+      </div>
+      <div class="container legal-note">
+        Données personnelles traitées conformément au RGPD.
+        <a class="legal-link" href="politique-confidentialite.html">Politique de confidentialité</a>
+        <a class="legal-link" href="admin.html">Administration</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

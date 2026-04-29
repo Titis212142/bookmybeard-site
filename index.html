@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookMyBeard - Réservation barbershop</title>
+    <meta
+      name="description"
+      content="BookMyBeard : réservez votre barbier en ligne en quelques clics, sans paiement en ligne."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="#top"
+          aria-label="BookMyBeard - Retour à l'accueil"
+        >
+          <img src="logo.png" alt="Logo BookMyBeard" class="brand-png" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Ouvrir le menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="primary-navigation" aria-label="Navigation principale">
+          <ul>
+            <li><a href="#top">Accueil</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="a-propos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <a href="#reservation" class="btn btn-primary header-cta">Réserver</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="reservation" aria-labelledby="hero-title">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Réservation en ligne</span>
+            <h1 id="hero-title">Réservez votre barbier en ligne</h1>
+            <p>
+              Choisissez un service, une date, un créneau en 2 minutes. Notre
+              équipe vous accueille dans un cadre moderne et confortable à
+              Yverdon.
+            </p>
+          </div>
+
+          <aside class="booking-card" aria-labelledby="booking-title">
+            <h2 id="booking-title">Votre créneau</h2>
+            <form id="bookingForm" class="booking-form" novalidate>
+              <div class="field">
+                <label for="bookingName">Nom complet</label>
+                <input
+                  id="bookingName"
+                  name="fullName"
+                  type="text"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="field">
+                <label for="bookingEmail">Email</label>
+                <input
+                  id="bookingEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="field">
+                <label for="service">Service</label>
+                <select
+                  id="service"
+                  name="service"
+                  required
+                  aria-required="true"
+                >
+                  <option value="">Sélectionnez un service</option>
+                  <option value="Taille de barbe">
+                    Taille de barbe - CHF 25
+                  </option>
+                  <option value="Coupe + barbe">Coupe + barbe - CHF 45</option>
+                  <option value="Rasage à l’ancienne">
+                    Rasage à l’ancienne - CHF 35
+                  </option>
+                  <option value="Soin barbe premium">
+                    Soin barbe premium - CHF 30
+                  </option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="date">Date</label>
+                <input
+                  id="date"
+                  name="date"
+                  type="date"
+                  required
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="field">
+                <label for="time">Heure</label>
+                <select id="time" name="time" required aria-required="true">
+                  <option value="">Choisissez une heure</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                  <option value="17:00">17:00</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Réserver maintenant
+              </button>
+              <p class="booking-note">Sans paiement en ligne</p>
+              <p class="error-message" id="formError" aria-live="polite"></p>
+            </form>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="apropos" aria-labelledby="why-title">
+        <div class="container">
+          <span class="eyebrow">Pourquoi nous choisir</span>
+          <h2 id="why-title">Pourquoi BookMyBeard&nbsp;?</h2>
+          <div class="grid-4">
+            <article class="card">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M14 3v6h6"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M8 13h8M8 17h5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <h3>Réservation rapide</h3>
+              <p>
+                Un parcours de réservation simple et clair, pensé pour finaliser
+                en moins de deux minutes.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect
+                    x="3"
+                    y="6"
+                    width="18"
+                    height="12"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="2.5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M7 9h.01M17 15h.01"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <h3>Prix clairs</h3>
+              <p>
+                Des tarifs affichés en CHF dès le départ, sans frais cachés ni
+                surprises.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect
+                    x="7"
+                    y="2.8"
+                    width="10"
+                    height="18.4"
+                    rx="2.2"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M11 5.7h2M11.5 18.5h1"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <h3>Mobile-first</h3>
+              <p>
+                Consultez les services et réservez confortablement depuis votre
+                smartphone.
+              </p>
+            </article>
+            <article class="card">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M3 8.5h18v10A2.5 2.5 0 0 1 18.5 21h-13A2.5 2.5 0 0 1 3 18.5v-10z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M3 8.5V6.8A2.8 2.8 0 0 1 5.8 4h3.8l1.4 2h7.2A2.8 2.8 0 0 1 21 8.8v-.3"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <h3>Gestion simple</h3>
+              <p>
+                Vous recevez un rappel et pouvez gérer facilement votre prochain
+                rendez-vous.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services" aria-labelledby="services-title">
+        <div class="container">
+          <span class="eyebrow">Prestations</span>
+          <h2 id="services-title">Nos services</h2>
+          <div class="services-grid">
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Taille de barbe</h3>
+                <span class="price">CHF 25</span>
+              </div>
+              <p>
+                Contours nets et finition précise pour une barbe propre et
+                structurée.
+              </p>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Taille de barbe"
+              >
+                Réserver
+              </button>
+            </article>
+
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Coupe + barbe</h3>
+                <span class="price">CHF 45</span>
+              </div>
+              <p>
+                Coupe personnalisée et entretien de la barbe pour un style
+                complet.
+              </p>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Coupe + barbe"
+              >
+                Réserver
+              </button>
+            </article>
+
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Rasage à l’ancienne</h3>
+                <span class="price">CHF 35</span>
+              </div>
+              <p>
+                Serviette chaude, mousse traditionnelle et rasage précis au
+                coupe-chou.
+              </p>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Rasage à l’ancienne"
+              >
+                Réserver
+              </button>
+            </article>
+
+            <article class="card service-card">
+              <div class="service-head">
+                <h3>Soin barbe premium</h3>
+                <span class="price">CHF 30</span>
+              </div>
+              <p>
+                Soin complet avec huile nourrissante et conseils d’entretien
+                personnalisés.
+              </p>
+              <button
+                class="btn btn-secondary reserve-service"
+                data-service="Soin barbe premium"
+              >
+                Réserver
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="how-title">
+        <div class="container">
+          <span class="eyebrow">Processus</span>
+          <h2 id="how-title">Comment ça marche ?</h2>
+          <div class="steps-grid">
+            <article class="card step">
+              <span class="step-number">1</span>
+              <h3>Choisir un service</h3>
+              <p>
+                Sélectionnez la prestation qui correspond à votre besoin et
+                votre style.
+              </p>
+            </article>
+            <article class="card step">
+              <span class="step-number">2</span>
+              <h3>Choisir un créneau</h3>
+              <p>
+                Choisissez la date et l’heure qui vous conviennent parmi les
+                disponibilités.
+              </p>
+            </article>
+            <article class="card step">
+              <span class="step-number">3</span>
+              <h3>Confirmer</h3>
+              <p>
+                Validez en un clic. Vous recevez un message de confirmation
+                instantané.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="reviews-title">
+        <div class="container">
+          <span class="eyebrow">Avis clients</span>
+          <h2 id="reviews-title">Ils nous font confiance</h2>
+          <div class="testimonials-grid">
+            <article class="card">
+              <div class="stars" aria-label="5 étoiles">★★★★★</div>
+              <p>
+                "Réservation super rapide et accueil top à Yverdon. Service
+                précis et ambiance premium."
+              </p>
+              <div class="testimonial-author">Nicolas R. - Yverdon</div>
+            </article>
+            <article class="card">
+              <div class="stars" aria-label="5 étoiles">★★★★★</div>
+              <p>
+                "La coupe + barbe est nickel à chaque fois. Je réserve depuis
+                mon téléphone en 2 minutes."
+              </p>
+              <div class="testimonial-author">Yann M. - Yverdon</div>
+            </article>
+            <article class="card">
+              <div class="stars" aria-label="4 étoiles">★★★★☆</div>
+              <p>
+                "Interface claire, prix transparents et très bonne ponctualité.
+                Je recommande BookMyBeard."
+              </p>
+              <div class="testimonial-author">Mehdi S. - Yverdon</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="final-cta">
+            <h2>Prêt à réserver votre prochain rendez-vous ?</h2>
+            <p>
+              Bloquez votre créneau en ligne et profitez d’un service premium,
+              sans paiement en ligne.
+            </p>
+            <a href="#reservation" class="btn btn-primary"
+              >Réserver maintenant</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="#top" aria-label="BookMyBeard - Haut de page">
+            <img
+              src="bookmybeardlogofooter.png"
+              alt="Logo BookMyBeard"
+              class="brand-png footer-logo"
+            />
+          </a>
+          <p>
+            Plateforme de réservation moderne pour barbershop premium, pensée
+            pour aller vite et bien.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Liens</h3>
+          <div class="footer-links">
+            <a href="#top">Accueil</a>
+            <a href="services.html">Services</a>
+            <a href="a-propos.html">À propos</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Coordonnées</h3>
+          <p>
+            BookMyBeard Yverdon<br />Avenue des Sports 12, 1400
+            Yverdon-les-Bains
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Horaires</h3>
+          <p>
+            Lun - Ven : 09:00 - 19:00<br />Samedi : 09:00 - 17:00<br />Dimanche
+            : Fermé
+          </p>
+        </div>
+      </div>
+      <div class="container legal-note">
+        Données personnelles traitées conformément au RGPD.
+        <a class="legal-link" href="politique-confidentialite.html">Politique de confidentialité</a>
+        <a class="legal-link" href="admin.html">Administration</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

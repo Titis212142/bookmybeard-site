@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookMyBeard - Administration</title>
+    <meta
+      name="description"
+      content="Espace administrateur BookMyBeard : gestion des rendez-vous, confirmations, annulations et statistiques."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="admin-page admin-auth-pending">
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a class="brand" href="index.html#top" aria-label="Retour à l'accueil">
+          <img src="logo.png" alt="Logo BookMyBeard" class="brand-png" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Ouvrir le menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="primary-navigation" aria-label="Navigation principale">
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="a-propos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <a href="index.html#reservation" class="btn btn-primary header-cta">Réserver</a>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container admin-layout">
+        <section class="card admin-section">
+          <div class="admin-toolbar">
+            <h1 class="admin-title">Tableau de bord administrateur</h1>
+            <button id="adminLogout" type="button" class="btn btn-secondary">Se déconnecter</button>
+          </div>
+          <p>
+            Gérez les demandes de rendez-vous, confirmez/annulez les créneaux et
+            suivez les statistiques d'activité.
+          </p>
+          <div id="adminNotice" class="admin-notice" aria-live="polite"></div>
+        </section>
+
+        <section class="admin-stats-grid">
+          <article class="card admin-stat-card">
+            <h2>Total réservations</h2>
+            <p class="admin-stat-value" id="statTotal">0</p>
+          </article>
+          <article class="card admin-stat-card">
+            <h2>Rendez-vous confirmés à venir</h2>
+            <p class="admin-stat-value" id="statUpcoming">0</p>
+          </article>
+          <article class="card admin-stat-card">
+            <h2>Taux d'annulation</h2>
+            <p class="admin-stat-value" id="statCancelRate">0%</p>
+          </article>
+        </section>
+
+        <section class="admin-charts-grid">
+          <article class="card admin-list-card">
+            <h3>Réservations par statut</h3>
+            <div class="admin-chart-wrap">
+              <canvas id="chartByStatus" aria-label="Graphique des réservations par statut"></canvas>
+            </div>
+            <ul id="listByStatus" class="admin-list"></ul>
+          </article>
+          <article class="card admin-list-card">
+            <h3>Réservations par service</h3>
+            <div class="admin-chart-wrap">
+              <canvas id="chartByService" aria-label="Graphique des réservations par service"></canvas>
+            </div>
+            <ul id="listByService" class="admin-list"></ul>
+          </article>
+          <article class="card admin-list-card">
+            <h3>Réservations par jour (30 derniers jours)</h3>
+            <div class="admin-chart-wrap admin-chart-wrap-line">
+              <canvas id="chartByDay" aria-label="Graphique des réservations par jour"></canvas>
+            </div>
+            <ul id="listByDay" class="admin-list"></ul>
+          </article>
+        </section>
+
+        <section class="card admin-section">
+          <div class="admin-toolbar">
+            <h2>Demandes clients</h2>
+            <button id="refreshAdmin" type="button" class="btn btn-secondary">Rafraîchir</button>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Client</th>
+                  <th>Email</th>
+                  <th>Service</th>
+                  <th>Promo</th>
+                  <th>Date</th>
+                  <th>Heure</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminBookingsBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html#top" aria-label="BookMyBeard - Accueil">
+            <img
+              src="bookmybeardlogofooter.png"
+              alt="Logo BookMyBeard"
+              class="brand-png footer-logo"
+            />
+          </a>
+          <p>
+            Espace administrateur BookMyBeard pour la gestion du planning et des réservations.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Liens</h3>
+          <div class="footer-links">
+            <a href="index.html">Accueil</a>
+            <a href="services.html">Services</a>
+            <a href="a-propos.html">À propos</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Coordonnées</h3>
+          <p>
+            BookMyBeard Yverdon<br />Avenue des Sports 12, 1400
+            Yverdon-les-Bains
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-title">Horaires</h3>
+          <p>
+            Lun - Ven : 09:00 - 19:00<br />Samedi : 09:00 - 17:00<br />Dimanche :
+            Fermé
+          </p>
+        </div>
+      </div>
+      <div class="container legal-note">
+        Données personnelles traitées conformément au RGPD.
+        <a class="legal-link" href="politique-confidentialite.html">Politique de confidentialité</a>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
