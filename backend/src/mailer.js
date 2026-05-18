@@ -5,12 +5,30 @@ const {
   SMTP_PORT,
   SMTP_USER,
   SMTP_PASS,
+  BREVO_API_KEY,
   MAIL_FROM = "BookMyBeard <no-reply@bookmybeard.ch>",
   CONTACT_RECIPIENT = "matis.monnin@gmail.com",
 } = process.env;
 
 function hasSmtpConfig() {
   return Boolean(SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS);
+}
+
+function hasBrevoApiConfig() {
+  return Boolean(BREVO_API_KEY && String(BREVO_API_KEY).trim());
+}
+
+function hasMailConfig() {
+  return hasBrevoApiConfig() || hasSmtpConfig();
+}
+
+function parseMailFrom(value) {
+  const raw = String(value || "").trim();
+  const match = raw.match(/^(.+?)\s*<([^>]+)>$/);
+  if (match) {
+    return { name: match[1].trim(), email: match[2].trim() };
+  }
+  return { name: "BookMyBeard", email: raw };
 }
 
 let transporter = null;
@@ -30,18 +48,55 @@ if (hasSmtpConfig()) {
 }
 
 const SMTP_SEND_TIMEOUT_MS = 10000;
+const BREVO_API_URL = "https://api.brevo.com/v3/smtp/email";
 
 function formatMailError(error) {
-  if (!error) return "Erreur SMTP inconnue";
+  if (!error) return "Erreur email inconnue";
   const parts = [error.message];
   if (error.response) parts.push(String(error.response));
   if (error.code) parts.push(`code=${error.code}`);
   return parts.filter(Boolean).join(" | ");
 }
 
+async function sendViaBrevoApi({ to, replyTo, subject, text, html }) {
+  const apiKey = String(BREVO_API_KEY || "").trim();
+  if (!apiKey) {
+    throw new Error("BREVO_API_KEY manquant");
+  }
+
+  const payload = {
+    sender: parseMailFrom(MAIL_FROM),
+    to: [{ email: to }],
+    subject,
+    textContent: text,
+    htmlContent: html,
+  };
+
+  if (replyTo) {
+    payload.replyTo = { email: replyTo };
+  }
+
+  const response = await fetch(BREVO_API_URL, {
+    method: "POST",
+    headers: {
+      "api-key": apiKey,
+      "Content-Type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const details = await response.text();
+    throw new Error(`Brevo API ${response.status}: ${details}`);
+  }
+
+  return { status: "sent", transport: "brevo-api" };
+}
+
 async function sendMailWithTimeout(mailOptions) {
   if (!transporter) {
-    return { status: "simulated" };
+    return { status: "simulated", transport: "simulated" };
   }
 
   const sendPromise = transporter.sendMail(mailOptions);
@@ -51,9 +106,9 @@ async function sendMailWithTimeout(mailOptions) {
 
   try {
     await Promise.race([sendPromise, timeoutPromise]);
-    return { status: "sent" };
+    return { status: "sent", transport: "smtp" };
   } catch (error) {
-    console.error("[MAILER] Echec envoi:", formatMailError(error), {
+    console.error("[MAILER] Echec SMTP:", formatMailError(error), {
       to: mailOptions.to,
       from: mailOptions.from,
     });
@@ -61,7 +116,27 @@ async function sendMailWithTimeout(mailOptions) {
   }
 }
 
-if (transporter) {
+async function deliverEmail({ to, replyTo, subject, text, html }) {
+  if (hasBrevoApiConfig()) {
+    return sendViaBrevoApi({ to, replyTo, subject, text, html });
+  }
+
+  if (transporter) {
+    return sendMailWithTimeout({
+      from: MAIL_FROM,
+      to,
+      replyTo,
+      subject,
+      text,
+      html,
+    });
+  }
+
+  console.log("[MAILER] Aucun transport configure. Email simule:", { to, subject });
+  return { status: "simulated", transport: "simulated" };
+}
+
+if (transporter && !hasBrevoApiConfig()) {
   transporter
     .verify()
     .then(function () {
@@ -70,6 +145,10 @@ if (transporter) {
     .catch(function (error) {
       console.error("[MAILER] Verification SMTP echouee:", formatMailError(error));
     });
+}
+
+if (hasBrevoApiConfig()) {
+  console.log("[MAILER] Transport actif: Brevo API (HTTPS)");
 }
 
 function formatDateFr(dateIso) {
@@ -232,20 +311,7 @@ function buildBookingEmailTemplate({ type, booking }) {
 async function sendBookingEmail({ type, booking }) {
   const { email } = booking;
   const { subject, text, html } = buildBookingEmailTemplate({ type, booking });
-
-  if (!transporter) {
-    console.log("[MAILER] SMTP non configuré. Email simulé:");
-    console.log({ to: email, subject, text });
-    return { status: "simulated" };
-  }
-
-  return sendMailWithTimeout({
-    from: MAIL_FROM,
-    to: email,
-    subject,
-    text,
-    html,
-  });
+  return deliverEmail({ to: email, subject, text, html });
 }
 
 async function sendBookingConfirmation({ bookingId, fullName, email, service, date, time }) {
@@ -297,14 +363,7 @@ async function sendContactFormEmail({ fullName, email, subject, message }) {
     </div>
   `;
 
-  if (!transporter) {
-    console.log("[MAILER] SMTP non configuré. Contact email simulé:");
-    console.log({ to: CONTACT_RECIPIENT, replyTo: cleanEmail, subject: finalSubject, text });
-    return { status: "simulated" };
-  }
-
-  return sendMailWithTimeout({
-    from: MAIL_FROM,
+  return deliverEmail({
     to: CONTACT_RECIPIENT,
     replyTo: cleanEmail,
     subject: finalSubject,
@@ -315,6 +374,7 @@ async function sendContactFormEmail({ fullName, email, subject, message }) {
 
 module.exports = {
   hasSmtpConfig,
+  hasMailConfig,
   sendContactFormEmail,
   sendBookingEmail,
   sendBookingConfirmation,

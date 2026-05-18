@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { z } = require("zod");
 const db = require("./db");
-const { sendBookingEmail, sendContactFormEmail, hasSmtpConfig } = require("./mailer");
+const { sendBookingEmail, sendContactFormEmail, hasMailConfig } = require("./mailer");
 
 const app = express();
 const port = Number(process.env.PORT || 4000);
@@ -92,7 +92,10 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.get("/api/mailer-status", (_req, res) => {
-  res.json({ configured: hasSmtpConfig() });
+  res.json({
+    configured: hasMailConfig(),
+    transport: process.env.BREVO_API_KEY ? "brevo-api" : "smtp",
+  });
 });
 
 app.post("/api/admin/test-mail", requireAdminAuth, async (req, res) => {
