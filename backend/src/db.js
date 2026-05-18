@@ -1,8 +1,13 @@
+const fs = require("fs");
 const path = require("path");
 const Database = require("better-sqlite3");
 
 const dbPath = process.env.DB_PATH || "./data/bookings.db";
 const absoluteDbPath = path.resolve(process.cwd(), dbPath);
+const dbDir = path.dirname(absoluteDbPath);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
 const db = new Database(absoluteDbPath);
 
 db.pragma("journal_mode = WAL");
