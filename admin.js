@@ -30,7 +30,12 @@
     });
   }
 
-  const API_BASE_URL = window.BOOKMYBEARD_API_URL || "http://localhost:4000";
+  function resolveApiBaseUrl() {
+    if (window.BOOKMYBEARD_API_URL) return window.BOOKMYBEARD_API_URL;
+    if (window.location.hostname.endsWith(".github.io")) return "";
+    return "http://localhost:4000";
+  }
+  const API_BASE_URL = resolveApiBaseUrl();
   const ADMIN_PASSWORD_KEY = "bookmybeard_admin_password";
 
   const adminNotice = document.getElementById("adminNotice");

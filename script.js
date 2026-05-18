@@ -40,7 +40,12 @@
   const errorContainer = document.getElementById("formError");
   const toast = document.getElementById("toast");
   const reserveButtons = document.querySelectorAll(".reserve-service");
-  const API_BASE_URL = window.BOOKMYBEARD_API_URL || "http://localhost:4000";
+  function resolveApiBaseUrl() {
+    if (window.BOOKMYBEARD_API_URL) return window.BOOKMYBEARD_API_URL;
+    if (window.location.hostname.endsWith(".github.io")) return "";
+    return "http://localhost:4000";
+  }
+  const API_BASE_URL = resolveApiBaseUrl();
   const PROMO_POPUP_SEEN_KEY = "bookmybeard_first_visit_promo_seen";
   const PROMO_DISCOUNT_ACTIVE_KEY = "bookmybeard_first_visit_discount_active";
   const weekdayTimes = [
@@ -329,6 +334,11 @@
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
+      if (!API_BASE_URL) {
+        errorContainer.textContent =
+          "API en ligne non configurée. Ajoutez votre URL Railway dans api-config.js.";
+        return;
+      }
       if (!validateForm()) {
         return;
       }

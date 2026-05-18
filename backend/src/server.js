@@ -38,12 +38,14 @@ function parseAllowedOrigins(value) {
 
 const allowedOrigins = parseAllowedOrigins(FRONTEND_ORIGIN);
 const localhostOriginRegex = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i;
+const githubPagesOriginRegex = /^https:\/\/[\w-]+\.github\.io$/i;
 
 app.use(
   cors({
     origin(origin, callback) {
       // Allow file:// (origin null) and local dev.
       if (!origin) return callback(null, true);
+      if (githubPagesOriginRegex.test(origin)) return callback(null, true);
       if (!allowedOrigins.length) {
         // If not configured, allow localhost origins in dev.
         if (localhostOriginRegex.test(origin)) return callback(null, true);
