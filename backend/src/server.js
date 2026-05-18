@@ -180,23 +180,23 @@ app.post("/api/bookings", async (req, res) => {
     );
     const bookingId = result.lastInsertRowid;
 
-    let emailStatus = "failed";
-    try {
-      const mailResult = await sendBookingEmail({
-        type: "pending",
-        booking: { bookingId, fullName, email, service, date, time },
+    // Respond immediately; email is sent in background to avoid long waits.
+    void sendBookingEmail({
+      type: "pending",
+      booking: { bookingId, fullName, email, service, date, time },
+    })
+      .then(function (mailResult) {
+        console.log(`[MAILER] Email reservation #${bookingId}: ${mailResult.status}`);
+      })
+      .catch(function (mailError) {
+        console.error("[MAILER] Erreur envoi confirmation:", mailError);
       });
-      emailStatus = mailResult.status;
-    } catch (mailError) {
-      // Booking remains confirmed; email issue is logged.
-      console.error("[MAILER] Erreur envoi confirmation:", mailError);
-    }
 
     return res.status(201).json({
       id: bookingId,
       status: "pending",
       message: "Demande de réservation enregistrée.",
-      emailStatus,
+      emailStatus: "queued",
       firstVisitDiscountApplied: Boolean(firstVisitDiscountApplied),
     });
   } catch (error) {

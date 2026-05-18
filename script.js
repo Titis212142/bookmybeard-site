@@ -353,13 +353,20 @@
 
       try {
         setSubmitLoading(true);
+        const controller = new AbortController();
+        const requestTimeout = window.setTimeout(function () {
+          controller.abort();
+        }, 20000);
+
         const response = await fetch(`${API_BASE_URL}/api/bookings`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
+          signal: controller.signal,
         });
+        window.clearTimeout(requestTimeout);
 
         const data = await response.json();
         if (!response.ok) {
@@ -371,7 +378,7 @@
           return;
         }
 
-        if (data.emailStatus === "sent") {
+        if (data.emailStatus === "sent" || data.emailStatus === "queued") {
           showToast("Demande envoyée. Vous recevrez un email de suivi.");
           showSuccessPopup("Reservation enregistree avec succes.");
         } else if (data.emailStatus === "simulated") {
@@ -393,8 +400,13 @@
         highlightSuccess(form);
       } catch (error) {
         console.error("[BOOKING] Erreur création réservation:", error);
-        errorContainer.textContent =
-          "Le serveur de réservation est indisponible. Merci de réessayer.";
+        if (error && error.name === "AbortError") {
+          errorContainer.textContent =
+            "La requête a pris trop de temps. Merci de réessayer.";
+        } else {
+          errorContainer.textContent =
+            "Le serveur de réservation est indisponible. Merci de réessayer.";
+        }
       } finally {
         setSubmitLoading(false);
       }

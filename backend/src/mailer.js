@@ -19,11 +19,30 @@ if (hasSmtpConfig()) {
     host: SMTP_HOST,
     port: Number(SMTP_PORT),
     secure: Number(SMTP_PORT) === 465,
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 12000,
     auth: {
       user: SMTP_USER,
       pass: SMTP_PASS,
     },
   });
+}
+
+const SMTP_SEND_TIMEOUT_MS = 10000;
+
+async function sendMailWithTimeout(mailOptions) {
+  if (!transporter) {
+    return { status: "simulated" };
+  }
+
+  const sendPromise = transporter.sendMail(mailOptions);
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error("SMTP timeout")), SMTP_SEND_TIMEOUT_MS);
+  });
+
+  await Promise.race([sendPromise, timeoutPromise]);
+  return { status: "sent" };
 }
 
 function formatDateFr(dateIso) {
@@ -193,15 +212,13 @@ async function sendBookingEmail({ type, booking }) {
     return { status: "simulated" };
   }
 
-  await transporter.sendMail({
+  return sendMailWithTimeout({
     from: MAIL_FROM,
     to: email,
     subject,
     text,
     html,
   });
-
-  return { status: "sent" };
 }
 
 async function sendBookingConfirmation({ bookingId, fullName, email, service, date, time }) {
@@ -259,7 +276,7 @@ async function sendContactFormEmail({ fullName, email, subject, message }) {
     return { status: "simulated" };
   }
 
-  await transporter.sendMail({
+  return sendMailWithTimeout({
     from: MAIL_FROM,
     to: CONTACT_RECIPIENT,
     replyTo: cleanEmail,
@@ -267,8 +284,6 @@ async function sendContactFormEmail({ fullName, email, subject, message }) {
     text,
     html,
   });
-
-  return { status: "sent" };
 }
 
 module.exports = {
