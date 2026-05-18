@@ -95,6 +95,40 @@ app.get("/api/mailer-status", (_req, res) => {
   res.json({ configured: hasSmtpConfig() });
 });
 
+app.post("/api/admin/test-mail", requireAdminAuth, async (req, res) => {
+  const to = String(req.body?.to || process.env.CONTACT_RECIPIENT || "").trim();
+  if (!to || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+    return res.status(400).json({ error: "Adresse email de test invalide." });
+  }
+
+  try {
+    const mailResult = await sendBookingEmail({
+      type: "pending",
+      booking: {
+        bookingId: 0,
+        fullName: "Test BookMyBeard",
+        email: to,
+        service: "Taille de barbe",
+        date: "2026-05-22",
+        time: "10:00",
+      },
+    });
+    return res.json({
+      ok: true,
+      to,
+      emailStatus: mailResult.status,
+      message: "Email de test envoye.",
+    });
+  } catch (error) {
+    console.error("[MAILER] Test email failed:", error);
+    return res.status(500).json({
+      ok: false,
+      error: "Echec envoi email de test.",
+      details: String(error.message || error),
+    });
+  }
+});
+
 app.get("/api/availability", (req, res) => {
   const date = String(req.query.date || "");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
@@ -196,7 +230,7 @@ app.post("/api/bookings", async (req, res) => {
       id: bookingId,
       status: "pending",
       message: "Demande de réservation enregistrée.",
-      emailStatus: "queued",
+      emailStatus: "sent",
       firstVisitDiscountApplied: Boolean(firstVisitDiscountApplied),
     });
   } catch (error) {

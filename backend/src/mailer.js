@@ -31,6 +31,14 @@ if (hasSmtpConfig()) {
 
 const SMTP_SEND_TIMEOUT_MS = 10000;
 
+function formatMailError(error) {
+  if (!error) return "Erreur SMTP inconnue";
+  const parts = [error.message];
+  if (error.response) parts.push(String(error.response));
+  if (error.code) parts.push(`code=${error.code}`);
+  return parts.filter(Boolean).join(" | ");
+}
+
 async function sendMailWithTimeout(mailOptions) {
   if (!transporter) {
     return { status: "simulated" };
@@ -41,8 +49,27 @@ async function sendMailWithTimeout(mailOptions) {
     setTimeout(() => reject(new Error("SMTP timeout")), SMTP_SEND_TIMEOUT_MS);
   });
 
-  await Promise.race([sendPromise, timeoutPromise]);
-  return { status: "sent" };
+  try {
+    await Promise.race([sendPromise, timeoutPromise]);
+    return { status: "sent" };
+  } catch (error) {
+    console.error("[MAILER] Echec envoi:", formatMailError(error), {
+      to: mailOptions.to,
+      from: mailOptions.from,
+    });
+    throw error;
+  }
+}
+
+if (transporter) {
+  transporter
+    .verify()
+    .then(function () {
+      console.log("[MAILER] Connexion SMTP OK");
+    })
+    .catch(function (error) {
+      console.error("[MAILER] Verification SMTP echouee:", formatMailError(error));
+    });
 }
 
 function formatDateFr(dateIso) {
